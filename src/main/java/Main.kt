@@ -120,7 +120,6 @@ class Main : ListenerAdapter() {
     }
 
     companion object {
-        @Throws(LoginException::class)
         @JvmStatic
         fun main(args: Array<String>) {
             val builder = JDABuilder(AccountType.BOT)
