@@ -18,11 +18,11 @@ dependencies {
 }
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "14"
+        jvmTarget = "13"
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = "14"
+        jvmTarget = "13"
     }
 }
