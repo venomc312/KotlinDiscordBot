@@ -1,14 +1,15 @@
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.JDABuilder
+import net.dv8tion.jda.core.Permission
 import net.dv8tion.jda.core.entities.Game
+import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.core.entities.Invite
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.awt.Color
-import java.lang.Exception
 import javax.security.auth.login.LoginException
-import kotlin.jvm.Throws
 
 
 class Main : ListenerAdapter() {
@@ -58,6 +59,21 @@ class Main : ListenerAdapter() {
         var words = event.getMessage().getContentRaw().split((" ").toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray();
 
         if (event.message.contentRaw.contains("kotlin.ban")) {
+
+            var author = event.author
+
+            if (!event.guild.getMember(event.author).hasPermission(Permission.BAN_MEMBERS)) {
+
+                val eb = EmbedBuilder()
+                        .setTitle("You don't have access to this command.")
+                        .setAuthor("Ban")
+                        .setDescription("bot.ban(user, reason)")
+                        .setColor(Color.RED)
+                        .setFooter("check description to see arguments.", null)
+                        .build()
+                event.channel.sendMessage(eb).queue()
+                return;
+            }
 
             if (words.size.equals(1)) {
                 val eb = EmbedBuilder()
